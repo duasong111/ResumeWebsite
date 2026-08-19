@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>杜阿松 · Personal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* ===== Design Tokens (Claude alpha) ===== */
+    :root {
+      --primary: #cc785c;
+      --primary-active: #a9583e;
+      --primary-disabled: #e6dfd8;
+      --ink: #141413;
+      --body: #3d3d3a;
+      --body-strong: #252523;
+      --muted: #6c6a64;
+      --muted-soft: #8e8b82;
+      --hairline: #e6dfd8;
+      --hairline-soft: #ebe6df;
+      --canvas: #faf9f5;
+      --surface-soft: #f5f0e8;
+      --surface-card: #efe9de;
+      --surface-dark: #181715;
+      --surface-dark-elevated: #252320;
+      --surface-dark-soft: #1f1e1b;
+      --on-primary: #ffffff;
+      --on-dark: #faf9f5;
+      --on-dark-soft: #a09d96;
+
+      --radius-xs: 4px;
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-pill: 9999px;
+
+      --font-display: "Cormorant Garamond", "Tiempos Headline", Garamond,
+        "Times New Roman", serif;
+      --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    /* ===== Reset ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    body { overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ===== Top Nav ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--canvas);
+      border-bottom: 1px solid var(--hairline);
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 64px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-body); font-weight: 500; font-size: 15px;
+      color: var(--ink);
+    }
+    .spike {
+      width: 14px; height: 14px;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 28px;
+      font-size: 14px; font-weight: 500;
+    }
+    .nav-links a { color: var(--ink); }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ===== Buttons ===== */
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 40px;
+      padding: 0 20px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 14px; font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover { background: var(--primary-active); }
+    .btn-secondary {
+      background: var(--canvas);
+      color: var(--ink);
+      border-color: var(--hairline);
+    }
+    .btn-text {
+      background: transparent; color: var(--ink);
+      padding: 0 4px; height: auto;
+    }
+    .btn-text:hover { color: var(--primary); }
+
+    /* ===== Hero Band ===== */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 96px 24px 80px;
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px;
+      align-items: center;
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(38px, 5.2vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--primary);
+    }
+    .hero-sub {
+      font-size: 17px;
+      color: var(--body);
+      max-width: 520px;
+      margin-bottom: 32px;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-meta {
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid var(--hairline);
+      display: flex; flex-wrap: wrap; gap: 24px 36px;
+    }
+    .hero-meta .item .label {
+      display: block;
+      font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--muted); margin-bottom: 4px;
+    }
+    .hero-meta .item .value {
+      font-size: 14px; color: var(--ink); font-weight: 500;
+    }
+
+    /* Hero illustration card (right side) */
+    .hero-illust {
+      background: var(--surface-dark);
+      color: var(--on-dark);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      letter-spacing: 0;
+    }
+    .hero-illust .dot-row {
+      display: flex; gap: 6px; margin-bottom: 18px;
+    }
+    .hero-illust .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--surface-dark-elevated); }
+    .hero-illust .line { color: var(--on-dark-soft); }
+    .hero-illust .key { color: #e8a55a; }
+    .hero-illust .str { color: #6db98f; }
+    .hero-illust .num { color: #a99cf0; }
+    .hero-illust .cmt { color: var(--muted-soft); }
+    .hero-illust .cursor { display: inline-block; width: 7px; height: 14px; background: var(--primary); vertical-align: text-bottom; animation: blink 1s infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ===== Sections ===== */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+    .section + .section { border-top: 1px solid var(--hairline); }
+    .section-head { margin-bottom: 48px; max-width: 720px; }
+    .section-head .eyebrow {
+      font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--muted); margin-bottom: 12px;
+    }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(28px, 3.4vw, 40px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .section-head p {
+      margin-top: 12px;
+      color: var(--body);
+    }
+
+    /* ===== Feature card ===== */
+    .feature-card {
+      background: var(--surface-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+    .grid-3 {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .grid-2 {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    @media (max-width: 900px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* ===== Awards ===== */
+    .award {
+      background: var(--surface-card);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      align-self: flex-start;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-card);
+      color: var(--ink);
+    }
+    .badge-coral {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .badge-outline {
+      background: transparent;
+      border: 1px solid var(--hairline);
+    }
+    .award .title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .award .meta {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ===== Projects ===== */
+    .project {
+      background: var(--surface-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+    .project + .project { margin-top: 16px; }
+    .project-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      flex-wrap: wrap; gap: 12px; margin-bottom: 8px;
+    }
+    .project-num {
+      font-family: var(--font-mono); font-size: 12px;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .project-time {
+      font-family: var(--font-mono); font-size: 12px;
+      color: var(--muted);
+    }
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 28px; line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 4px 0 12px;
+    }
+    .project-desc {
+      color: var(--body);
+      max-width: 720px;
+      margin-bottom: 16px;
+    }
+    .project-meta {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 16px;
+      font-size: 13px;
+      color: var(--body);
+      margin-bottom: 16px;
+    }
+    .project-meta .label {
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .tech-row {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 16px;
+    }
+    .tech {
+      font-family: var(--font-body);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--canvas);
+      color: var(--ink);
+      border: 1px solid var(--hairline);
+    }
+    .highlights {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .highlights li {
+      position: relative;
+      padding-left: 22px;
+      color: var(--body);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .highlights li::before {
+      content: "→";
+      position: absolute; left: 0; top: 0;
+      color: var(--primary);
+      font-family: var(--font-mono);
+    }
+    .highlights b { color: var(--ink); font-weight: 500; }
+
+    /* ===== Stats (dark surface) ===== */
+    .stats {
+      background: var(--surface-dark);
+      color: var(--on-dark);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--on-dark);
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--on-dark-soft);
+    }
+    @media (max-width: 768px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ===== Gallery ===== */
+    .gallery {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    .gallery.gallery-2 { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+    .gallery.gallery-3 { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .img-wrap {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--hairline);
+      background: var(--surface-card);
+      cursor: zoom-in;
+      transition: transform 0.2s;
+    }
+    .gallery.gallery-2 .img-wrap { aspect-ratio: 4 / 3; }
+    .gallery.gallery-3 .img-wrap { aspect-ratio: 9 / 16; }
+    .img-wrap:hover { transform: translateY(-2px); }
+    .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ===== Stack ===== */
+    .skill-cat h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-tag {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-card);
+      color: var(--ink);
+    }
+
+    /* ===== CTA / Footer ===== */
+    .cta-band {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-radius: var(--radius-lg);
+      padding: 64px;
+      text-align: center;
+    }
+    .cta-band h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(28px, 3.4vw, 40px);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .cta-band p { font-size: 17px; opacity: 0.92; margin-bottom: 28px; }
+    .btn-on-coral {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px;
+      height: 44px;
+      background: var(--canvas);
+      color: var(--ink);
+      border-radius: var(--radius-md);
+      font-weight: 500; font-size: 14px;
+    }
+    .btn-on-coral:hover { background: var(--surface-card); }
+
+    .footer {
+      background: var(--surface-dark);
+      color: var(--on-dark-soft);
+      border-radius: var(--radius-lg);
+      margin: 0 24px 24px;
+      padding: 64px 64px 32px;
+      max-width: 1100px;
+      margin-left: auto; margin-right: auto;
+    }
+    .footer-top {
+      display: flex; flex-wrap: wrap; gap: 12px 32px;
+      justify-content: space-between; align-items: end;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--surface-dark-elevated);
+    }
+    .footer-top h3 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--on-dark);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      max-width: 420px;
+    }
+    .footer-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .footer-bot {
+      padding-top: 24px;
+      font-size: 13px;
+      color: var(--on-dark-soft);
+      display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between;
+    }
+    .footer a { color: var(--on-dark); }
+    .footer a:hover { color: var(--primary); }
+
+    /* ===== Lightbox ===== */
+    .lightbox {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(20, 20, 19, 0.92);
+      z-index: 9999;
+      align-items: center; justify-content: center;
+      padding: 24px;
+      cursor: zoom-out;
+      animation: lb-fade 0.2s ease;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 94vw; max-height: 90vh;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+    }
+    .lightbox .close, .lightbox .nav {
+      position: absolute;
+      background: var(--surface-dark);
+      color: var(--on-dark);
+      border: 1px solid var(--surface-dark-elevated);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+    }
+    .lightbox .close {
+      top: 20px; right: 20px;
+      width: 40px; height: 40px; font-size: 20px;
+    }
+    .lightbox .nav {
+      top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; font-size: 22px;
+    }
+    .lightbox .prev { left: 20px; }
+    .lightbox .next { right: 20px; }
+    .lightbox .counter {
+      position: absolute;
+      bottom: 24px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-mono); font-size: 12px;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--on-dark-soft);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-dark);
+    }
+    @keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding: 56px 24px; gap: 40px; }
+      .nav-links { display: none; }
+      .section { padding: 48px 24px; }
+      .footer { padding: 48px 24px 24px; margin: 0 16px 16px; }
+      .cta-band { padding: 40px 24px; }
+      .gallery.gallery-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ Top Nav ============ -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#top">
+        <svg class="spike" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M12 3v18M3 12h18M5 5l14 14M19 5L5 19"/>
+        </svg>
+        Du Asong
+      </a>
+      <div class="nav-links">
+        <a href="#about">关于</a>
+        <a href="#awards">荣誉</a>
+        <a href="#projects">项目</a>
+        <a href="#github">GitHub</a>
+        <a href="#stack">技术栈</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ Hero ============ -->
+  <section class="hero" id="top">
+    <div>
+      <h1 class="hero-headline">
+        杜<em>阿</em>松
+      </h1>
+      <p class="hero-sub">
+        Python 后端 / 全栈工程师<br />
+        从校园教务小程序到 1000+ 台工业摄像头的运维平台，全部亲手落地。
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="mailto:duasong111@qq.com">联系我 →</a>
+      </div>
+    </div>
+
+    <!-- Hero right: dark code-window-card -->
+    <div class="hero-illust" role="img" aria-label="个人简介卡片">
+      <div class="dot-row">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+      <div><span class="cmt"># 个人信息</span></div>
+      <div><span class="line">电话：</span><span class="str">152 3632 0714</span></div>
+      <div><span class="line">邮箱：</span><span class="str">duasong111@qq.com</span></div>
+      <div><span class="line">GitHub：</span><span class="str">duasong111</span></div>
+      <div><span class="line">B 站：</span><a href="https://space.bilibili.com/86426289" target="_blank" style="color: var(--on-dark); text-decoration: underline; text-decoration-color: rgba(255,255,255,0.3);">space.bilibili.com/86426289</a></div>
+      <div><span class="line">所在地：</span><span class="str">武汉</span></div>
+      <div><span class="line">求职意向：</span><span class="str">Python 后端 / 全栈</span></div>
+      <div><span class="line">状态：</span><span class="key">开放机会</span></div>
+    </div>
+  </section>
+
+  <!-- ============ About / Education ============ -->
+  <section class="section" id="about">
+    <div class="section-head">
+      <div class="eyebrow">/ 关于</div>
+      <h2>计算机本科，<br />持续在写代码。</h2>
+      <p>
+        武昌首义学院 · 计算机科学与技术（前 15%）。<br />
+        中共党员 · 国家励志奖学金 · 优秀毕业生 · 软著 4 项。
+      </p>
+    </div>
+    <div class="grid-2">
+      <div class="feature-card">
+        <span class="badge">2021 — 2025</span>
+        <h3 style="font-family: var(--font-display); font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; margin: 12px 0 8px;">武昌首义学院</h3>
+        <div style="color: var(--body);">计算机科学与技术 · <b style="color: var(--ink);">专业前 15%</b> · 全日制本科</div>
+        <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px;">
+          <span class="tech">本科</span>
+          <span class="tech">全日制</span>
+          <span class="tech">前 15%</span>
+          <span class="tech">党员</span>
+          <span class="tech">优秀毕业生</span>
+        </div>
+      </div>
+      <div class="gallery gallery-2">
+        <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/degree-cert.png" alt="学信网学历证明" loading="lazy" />
+        </div>
+        <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/contest-2.jpg" alt="参赛志愿者" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Awards ============ -->
+  <section class="section" id="awards">
+    <div class="section-head">
+      <div class="eyebrow">/ 荣誉奖项</div>
+      <h2>国家级 2 项，<br />省级 3 项。</h2>
+      <p>国家级奖项 2 项、省级奖项 3 项、省级大创立项 1 项。</p>
+    </div>
+    <div class="grid-3">
+      <div class="award">
+        <span class="badge badge-coral">国家级 · 二等奖</span>
+        <div class="title">中软创新杯</div>
+        <div class="meta">项目：Ipredict 智能巡检系统</div>
+      </div>
+      <div class="award">
+        <span class="badge badge-coral">国家级 · 二等奖</span>
+        <div class="title">服务外包大赛</div>
+        <div class="meta">项目：TextIn 智能扫描</div>
+      </div>
+      <div class="award">
+        <span class="badge badge-coral">省级 · 一等奖</span>
+        <div class="title">智能交互创新赛</div>
+        <div class="meta">项目：指尖衣橱 · 后端开发</div>
+      </div>
+      <div class="award">
+        <span class="badge">省级 · 三等奖</span>
+        <div class="title">计算机设计大赛</div>
+        <div class="meta">项目：SaaS 实验管理平台</div>
+      </div>
+      <div class="award">
+        <span class="badge">省级 · 大创</span>
+        <div class="title">「人间烟火色」</div>
+        <div class="meta">省级立项</div>
+      </div>
+      <div class="award">
+        <span class="badge">荣誉</span>
+        <div class="title">奖学金 + 软著</div>
+        <div class="meta">国家励志奖学金 · 软著 4 项</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <div class="eyebrow" style="font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 12px;">/ Evidence</div>
+      <div class="gallery">
+        <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/contest-1.jpg" alt="项目答辩现场" loading="lazy" />
+        </div>
+        <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/contest-3.jpg" alt="挑战杯参赛" loading="lazy" />
+        </div>
+        <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/contest-4.jpg" alt="湖北省程序设计竞赛" loading="lazy" />
+        </div>
+        <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/certificates.jpg" alt="荣誉证书合集" loading="lazy" />
+        </div>
+        <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/software-copyrights.jpeg" alt="软件著作权 4 项" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Projects ============ -->
+  <section class="section" id="projects">
+    <div class="section-head">
+      <div class="eyebrow">/ 项目经历</div>
+      <h2>从 3.7W 学生<br />到 1000+ 台工业相机。</h2>
+      <p>三个核心项目，跨度从校园到工业——小程序、Web 配置平台、AI 运维系统。</p>
+    </div>
+
+    <!-- Project 1 · 乐首义 -->
+    <div class="project">
+      <div class="project-head">
+        <span class="project-num">项目 01 · 校园</span>
+        <span class="project-time">2022.07 — 2025.06</span>
+      </div>
+      <div class="project-title">乐首义 · 校园微信小程序</div>
+      <p class="project-desc">
+        武昌首义学院校园小程序，覆盖课表 / 成绩 / 考试 / 空教室 / 电费高频场景。
+        累计服务师生 <b>3.7W+</b>，日均访问 <b>7W+</b>，全校覆盖率 <b>80%+</b>。
+      </p>
+      <div class="project-meta">
+        <span class="label">前端</span>微信小程序 · TypeScript · Vite · LinUI
+        <span class="label">后端</span>Django · DRF · asyncio · Redis · MySQL · Docker
+      </div>
+      <div class="tech-row">
+        <span class="tech">WeChat MP</span>
+        <span class="tech">TS</span>
+        <span class="tech">Vite</span>
+        <span class="tech">LinUI</span>
+        <span class="tech">Django</span>
+        <span class="tech">DRF</span>
+        <span class="tech">asyncio</span>
+        <span class="tech">Redis</span>
+        <span class="tech">Celery</span>
+        <span class="tech">MySQL</span>
+        <span class="tech">Docker</span>
+      </div>
+      <ul class="highlights">
+        <li><b>自定义 UI 组件</b>封装课表周视图 / 成绩卡片 / 空教室日历，多机型适配，组件复用率 70%+。</li>
+        <li><b>asyncio 并发</b>封装统一请求客户端，对课表 / 成绩 / 空教室多数据源抓取。</li>
+        <li><b>Redis 多级缓存</b> + Celery Beat 按业务频率异步拉取教务最新数据。</li>
+      </ul>
+      <div class="gallery gallery-3" style="margin-top: 24px;">
+        <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/leshouyi-1.png" alt="启动性能" loading="lazy" />
+        </div>
+        <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/leshouyi-2.png" alt="活跃概况" loading="lazy" />
+        </div>
+        <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/leshouyi-3.png" alt="实时访问" loading="lazy" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Project 2 · 安防监测 -->
+    <div class="project">
+      <div class="project-head">
+        <span class="project-num">项目 02 · 工业</span>
+        <span class="project-time">2025.04 — 至今</span>
+      </div>
+      <div class="project-title">高精度安防监测配置平台</div>
+      <p class="project-desc">
+        面向工业智能相机的配置与调试平台，负责树莓派 AP 模式切换，
+        WebSocket 实时回传画面，OpenCV 椭圆拟合标定。
+        已支撑累计 <b>1000+</b> 台智能相机出货与远程调优。
+      </p>
+      <div class="project-meta">
+        <span class="label">前端</span>Vue 3 · TypeScript · Pinia · Element Plus · Canvas · WebSocket
+        <span class="label">后端</span>DRF · OpenCV · Uvicorn · PostgreSQL · Redis · Celery · Rustfs
+      </div>
+      <div class="tech-row">
+        <span class="tech">Vue 3</span>
+        <span class="tech">TS</span>
+        <span class="tech">Pinia</span>
+        <span class="tech">Element Plus</span>
+        <span class="tech">Canvas</span>
+        <span class="tech">WebSocket</span>
+        <span class="tech">DRF</span>
+        <span class="tech">OpenCV</span>
+        <span class="tech">PostgreSQL</span>
+        <span class="tech">SSH Pool</span>
+        <span class="tech">Celery</span>
+      </div>
+      <ul class="highlights">
+        <li><b>Canvas 交互绘图</b>：前端鼠标滚轮无级缩放 + 裁剪区域拖拽 + 椭圆标注实时下发持久化，理想 20 帧。</li>
+        <li><b>硬件高可用管理</b>：独立全局线程监控热插拔，WebSocket 心跳自动重连 + 离线数据清理。</li>
+        <li><b>工厂模式解耦</b>：封装相机驱动实例，支持 IMX477 与大恒相机灵活切换。</li>
+        <li><b>三通道 WebSocket</b>：图像流 / 裁剪参数 / 数据采集三类独立 WS 连接。</li>
+        <li><b>SSH 连接池 + Celery 巡检</b>：12min TTL 自动过期，Celery Beat 定时巡检离线设备。</li>
+      </ul>
+      <div style="margin-top: 20px;">
+        <a class="btn btn-primary" href="https://connect.jyaitech.com/login" target="_blank">访问平台 →</a>
+      </div>
+    </div>
+
+    <!-- Project 3 · AI Ops -->
+    <div class="project">
+      <div class="project-head">
+        <span class="project-num">项目 03 · AI 运维</span>
+        <span class="project-time">2026.03 — 至今</span>
+      </div>
+      <div class="project-title">设备状态监测平台</div>
+      <p class="project-desc">
+        面向公司 1000+ 台工业摄像头的全链路运维管理平台，
+        覆盖设备接入、数据上报、状态监控、远程运维、AI 智能调度，实现数据采集到智能决策的闭环。
+      </p>
+      <div class="project-meta">
+        <span class="label">前端</span>Next.js · React · TS · Three.js · WebSocket · OpenAI SDK
+        <span class="label">后端</span>FastAPI · PostgreSQL · Redis · RabbitMQ · ChromaDB · LangChain · RAG
+        <span class="label">DevOps</span>Docker · GitHub Actions · Nginx
+      </div>
+      <div class="tech-row">
+        <span class="tech">Next.js</span>
+        <span class="tech">React</span>
+        <span class="tech">Three.js</span>
+        <span class="tech">FastAPI</span>
+        <span class="tech">PostgreSQL</span>
+        <span class="tech">RabbitMQ</span>
+        <span class="tech">Redis</span>
+        <span class="tech">ChromaDB</span>
+        <span class="tech">DeepSeek</span>
+        <span class="tech">Agent Loop</span>
+        <span class="tech">LangChain</span>
+        <span class="tech">RAG</span>
+        <span class="tech">Docker</span>
+        <span class="tech">CI/CD</span>
+      </div>
+      <ul class="highlights">
+        <li><b>AI Agent 智能运维</b>：DeepSeek LLM + Tool Calling + Agent Loop 自主决策，Redis 结果缓存降低重复调用开销。</li>
+        <li><b>RAG 双库知识检索</b>：LangChain + PyPDF 语义切片，ChromaDB 持久化向量，支持技术书籍 + 设备运维双库混合检索。</li>
+        <li><b>读写分离架构</b>：在线判定走 Redis TTL 心跳（60s 上报 / 90s 过期），历史会话 PostgreSQL UPSERT 持久化。</li>
+        <li><b>生产者消费者消峰</b>：RabbitMQ 解耦上报与落库，攒批落库（50条/10秒）+ 拆半重试，TPS 15 → 180+。</li>
+        <li><b>Docker + GitHub Actions</b>：Dockerfile 多阶段构建镜像，CI/CD 实现推送 → 验证 → 构建 → 服务器自动拉取的完整流水线。</li>
+      </ul>
+      <div style="margin-top: 20px;">
+        <a class="btn btn-primary" href="http://8.134.128.64:7690/" target="_blank">访问平台 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GitHub ============ -->
+  <section class="section" id="github">
+    <div class="section-head">
+      <div class="eyebrow">/ 开源记录</div>
+      <h2>74 仓库 · 130 Stars<br />· 322 次贡献。</h2>
+      <p>持续在 GitHub 输出。</p>
+    </div>
+
+    <div class="stats">
+      <div>
+        <div class="stat-num">74</div>
+        <div class="stat-label">仓库</div>
+      </div>
+      <div>
+        <div class="stat-num">130</div>
+        <div class="stat-label">Stars</div>
+      </div>
+      <div>
+        <div class="stat-num">322</div>
+        <div class="stat-label">年度贡献</div>
+      </div>
+      <div>
+        <div class="stat-num">04</div>
+        <div class="stat-label">软著证书</div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top: 24px;">
+      <div class="award">
+        <span class="badge">C</span>
+        <div class="title">ESP32_intelligent_control</div>
+        <div class="meta">硬件 / 原理图 / PCB · 7★</div>
+      </div>
+      <div class="award">
+        <span class="badge">Python</span>
+        <div class="title">SedentaryMonitoring</div>
+        <div class="meta">MQTT 上报 + AI 分析 · 2★</div>
+      </div>
+      <div class="award">
+        <span class="badge">TypeScript</span>
+        <div class="title">React · Next.js</div>
+        <div class="meta">设备状态监测后台</div>
+      </div>
+    </div>
+
+    <div class="gallery gallery-2" style="margin-top: 24px;">
+      <div class="img-wrap" onclick="openLightbox(this)">
+        <img src="Image/github-1.png" alt="GitHub 个人主页" loading="lazy" />
+      </div>
+      <div class="img-wrap" onclick="openLightbox(this)">
+        <img src="Image/github-2.png" alt="GitHub 贡献" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Stack ============ -->
+  <section class="section" id="stack">
+    <div class="section-head">
+      <div class="eyebrow">/ 技术栈</div>
+      <h2>主力后端，<br />也能搞定前端与工程化。</h2>
+      <p>主力做后端，全栈时负责前端与工程化。</p>
+    </div>
+    <div class="grid-2">
+      <div class="feature-card skill-cat">
+        <h3>后端</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">Flask</span>
+          <span class="skill-tag">Django</span>
+          <span class="skill-tag">DRF</span>
+          <span class="skill-tag">异步</span>
+          <span class="skill-tag">RESTful</span>
+        </div>
+      </div>
+      <div class="feature-card skill-cat">
+        <h3>前端</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Vue 3</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">Pinia</span>
+          <span class="skill-tag">Three.js</span>
+          <span class="skill-tag">WebSocket</span>
+          <span class="skill-tag">Nginx</span>
+        </div>
+      </div>
+      <div class="feature-card skill-cat">
+        <h3>数据库 / 中间件</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Redis</span>
+          <span class="skill-tag">RabbitMQ</span>
+          <span class="skill-tag">ChromaDB</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">Celery</span>
+        </div>
+      </div>
+      <div class="feature-card skill-cat">
+        <h3>AI / 工程化</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">LLM</span>
+          <span class="skill-tag">Tool Calling</span>
+          <span class="skill-tag">Agent Loop</span>
+          <span class="skill-tag">LangChain</span>
+          <span class="skill-tag">RAG</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">Linux</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA Band ============ -->
+  <section class="section">
+    <div class="cta-band">
+      <h2>想聊项目、<br />或者一个机会？</h2>
+      <p>电话 / 微信：152 3632 0714 · 邮箱：duasong111@qq.com</p>
+      <a class="btn-on-coral" href="mailto:duasong111@qq.com">发封邮件 →</a>
+    </div>
+  </section>
+
+  <!-- ============ Footer ============ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <h3>欢迎联系 · 期待合作</h3>
+      <div class="footer-links">
+        <a class="btn-on-coral" href="mailto:duasong111@qq.com">Email</a>
+        <a class="btn-on-coral" href="https://github.com/duasong111" target="_blank">GitHub</a>
+        <a class="btn-on-coral" href="https://gitee.com/duasong111" target="_blank">Gitee</a>
+        <a class="btn-on-coral" href="https://space.bilibili.com/86426289" target="_blank">B 站</a>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <div>© 2026 杜阿松 · 静态主页 · 面试展示用</div>
+      <div>武汉 · 中国</div>
+    </div>
+  </footer>
+
+  <!-- ============ Lightbox ============ -->
+  <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <span class="close" onclick="closeLightbox(event)">×</span>
+    <span class="nav prev" onclick="navigate(event, -1)">‹</span>
+    <span class="nav next" onclick="navigate(event, 1)">›</span>
+    <img id="lightbox-img" src="" alt="" />
+    <span id="lightbox-counter" class="counter"></span>
+  </div>
+
+  <script>
+    let galleryImages = [];
+    let currentIndex = -1;
+    function initGallery() {
+      galleryImages = Array.from(document.querySelectorAll('.gallery .img-wrap img'));
+      galleryImages.forEach((img, i) => (img.dataset.index = i));
+    }
+    function openLightbox(wrap) {
+      const img = wrap.querySelector('img');
+      if (!img) return;
+      currentIndex = parseInt(img.dataset.index);
+      updateLightbox();
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(e) {
+      if (e.target.id === 'lightbox' || e.target.classList.contains('close')) {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+    function navigate(e, dir) {
+      e.stopPropagation();
+      currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
+      updateLightbox();
+    }
+    function updateLightbox() {
+      const img = galleryImages[currentIndex];
+      const lb = document.getElementById('lightbox-img');
+      lb.src = img.src; lb.alt = img.alt;
+      document.getElementById('lightbox-counter').textContent = `${currentIndex + 1} / ${galleryImages.length}`;
+    }
+    document.addEventListener('keydown', (e) => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('active')) return;
+      if (e.key === 'Escape') { lb.classList.remove('active'); document.body.style.overflow = ''; }
+      else if (e.key === 'ArrowLeft') navigate(e, -1);
+      else if (e.key === 'ArrowRight') navigate(e, 1);
+    });
+    initGallery();
+  </script>
+</body>
+</html>
