@@ -224,6 +224,38 @@
       border-radius: var(--radius-lg);
       padding: 32px;
     }
+    /* ===== About stats ===== */
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+      padding: 20px 16px;
+      background: var(--canvas);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--hairline);
+    }
+    .about-stats > div { text-align: center; }
+    .about-stat-num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      line-height: 1.1;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+    .about-stat-num span {
+      font-size: 14px;
+      color: var(--muted);
+      margin-left: 2px;
+      font-family: var(--font-body);
+    }
+    .about-stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
     .grid-3 {
       display: grid;
       gap: 16px;
@@ -237,6 +269,8 @@
     @media (max-width: 900px) {
       .grid-3 { grid-template-columns: 1fr; }
       .grid-2 { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: repeat(2, 1fr); }
+      .img-wrap.fill { aspect-ratio: 4/3; height: auto; }
     }
 
     /* ===== Awards ===== */
@@ -409,6 +443,7 @@
     .gallery.gallery-3 .img-wrap { aspect-ratio: 9 / 16; }
     .img-wrap:hover { transform: translateY(-2px); }
     .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .img-wrap.fill { aspect-ratio: auto; height: 100%; }
 
     /* ===== Stack ===== */
     .skill-cat h3 {
@@ -487,6 +522,16 @@
     }
     .footer a { color: var(--on-dark); }
     .footer a:hover { color: var(--primary); }
+    .footer .btn-on-coral {
+      background: transparent;
+      color: var(--on-dark);
+      border: 1px solid var(--surface-dark-elevated);
+    }
+    .footer .btn-on-coral:hover {
+      background: var(--surface-dark-elevated);
+      color: var(--primary);
+      border-color: var(--primary);
+    }
 
     /* ===== Lightbox ===== */
     .lightbox {
@@ -594,6 +639,7 @@
       <div><span class="line">邮箱：</span><span class="str">duasong111@qq.com</span></div>
       <div><span class="line">GitHub：</span><span class="str">duasong111</span></div>
       <div><span class="line">B 站：</span><a href="https://space.bilibili.com/86426289" target="_blank" style="color: var(--on-dark); text-decoration: underline; text-decoration-color: rgba(255,255,255,0.3);">space.bilibili.com/86426289</a></div>
+      <div><span class="line">小红书：</span><a href="https://www.xiaohongshu.com/user/profile/836033574" target="_blank" style="color: var(--on-dark); text-decoration: underline; text-decoration-color: rgba(255,255,255,0.3);">i-阿松</a></div>
       <div><span class="line">所在地：</span><span class="str">武汉</span></div>
       <div><span class="line">求职意向：</span><span class="str">Python 后端 / 全栈</span></div>
       <div><span class="line">状态：</span><span class="key">开放机会</span></div>
@@ -615,21 +661,35 @@
         <span class="badge">2021 — 2025</span>
         <h3 style="font-family: var(--font-display); font-size: 28px; line-height: 1.2; letter-spacing: -0.01em; margin: 12px 0 8px;">武昌首义学院</h3>
         <div style="color: var(--body);">计算机科学与技术 · <b style="color: var(--ink);">专业前 15%</b> · 全日制本科</div>
-        <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px;">
+        <div class="about-stats">
+          <div>
+            <div class="about-stat-num">15<span>%</span></div>
+            <div class="about-stat-label">专业前</div>
+          </div>
+          <div>
+            <div class="about-stat-num">4</div>
+            <div class="about-stat-label">软著</div>
+          </div>
+          <div>
+            <div class="about-stat-num">6<span>+</span></div>
+            <div class="about-stat-label">获奖</div>
+          </div>
+          <div>
+            <div class="about-stat-num">4<span>年</span></div>
+            <div class="about-stat-label">全日制</div>
+          </div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
           <span class="tech">本科</span>
           <span class="tech">全日制</span>
           <span class="tech">前 15%</span>
           <span class="tech">党员</span>
           <span class="tech">优秀毕业生</span>
+          <span class="tech">国家励志奖学金</span>
         </div>
       </div>
-      <div class="gallery gallery-2">
-        <div class="img-wrap" onclick="openLightbox(this)">
-          <img src="Image/degree-cert.png" alt="学信网学历证明" loading="lazy" />
-        </div>
-        <div class="img-wrap" onclick="openLightbox(this)">
-          <img src="Image/contest-2.jpg" alt="参赛志愿者" loading="lazy" />
-        </div>
+      <div class="img-wrap fill" onclick="openLightbox(this)">
+        <img src="Image/degree-cert.jpg" alt="学信网学历证明" loading="lazy" />
       </div>
     </div>
   </section>
@@ -681,6 +741,9 @@
           <img src="Image/contest-1.jpg" alt="项目答辩现场" loading="lazy" />
         </div>
         <div class="img-wrap" onclick="openLightbox(this)">
+          <img src="Image/contest-2.jpg" alt="参赛志愿者" loading="lazy" />
+        </div>
+        <div class="img-wrap" onclick="openLightbox(this)">
           <img src="Image/contest-3.jpg" alt="挑战杯参赛" loading="lazy" />
         </div>
         <div class="img-wrap" onclick="openLightbox(this)">
@@ -700,8 +763,8 @@
   <section class="section" id="projects">
     <div class="section-head">
       <div class="eyebrow">/ 项目经历</div>
-      <h2>从 3.7W 学生<br />到 1000+ 台工业相机。</h2>
-      <p>三个核心项目，跨度从校园到工业——小程序、Web 配置平台、AI 运维系统。</p>
+      <h2>从 3.7W 学生<br />到 300+ 台工业相机。</h2>
+      <p>三个核心项目，跨度从校园到工业——小程序、Web 配置平台、 运维系统。</p>
     </div>
 
     <!-- Project 1 · 乐首义 -->
@@ -799,7 +862,7 @@
       </div>
       <div class="project-title">设备状态监测平台</div>
       <p class="project-desc">
-        面向公司 1000+ 台工业摄像头的全链路运维管理平台，
+        面向公司 300+ 台工业摄像头的全链路运维管理平台，
         覆盖设备接入、数据上报、状态监控、远程运维、AI 智能调度，实现数据采集到智能决策的闭环。
       </p>
       <div class="project-meta">
@@ -832,6 +895,49 @@
       </ul>
       <div style="margin-top: 20px;">
         <a class="btn btn-primary" href="http://8.134.128.64:7690/" target="_blank">访问平台 →</a>
+      </div>
+    </div>
+
+    <!-- Project 4 · 话匣子 -->
+    <div class="project">
+      <div class="project-head">
+        <span class="project-num">项目 04 · 硬件 / Web / 云</span>
+        <span class="project-time">2026.9 — 至今</span>
+      </div>
+      <div class="project-title">话匣子 Huaxia · 三端一体语音终端</div>
+      <p class="project-desc">
+        ESP32 硬件 + Web 控制台 + 云端服务 三端一体：按住设备按钮录音，
+        云端转写，网页上回放 / 管理 / 反向下发 TTS。
+      </p>
+      <div class="project-meta">
+        <span class="label">前端</span>Vite 7 · React 19.2 · TypeScript · Web Crypto · Argon2id · 自写 HTTP / i18n
+        <span class="label">后端</span>FastAPI · PostgreSQL · Redis · paho-mqtt (EMQX) · RustFS · edge-tts · faster-whisper · AES-GCM · RSA-OAEP
+        <span class="label">固件 / 部署</span>ESP32 (I²S MSM261S3526Z0CM / NS4168 · W25Q) · Cloudflare Tunnel
+      </div>
+      <div class="tech-row">
+        <span class="tech">Vite 7</span>
+        <span class="tech">React 19</span>
+        <span class="tech">TypeScript</span>
+        <span class="tech">Web Crypto</span>
+        <span class="tech">FastAPI</span>
+        <span class="tech">PostgreSQL</span>
+        <span class="tech">Redis</span>
+        <span class="tech">MQTT</span>
+        <span class="tech">RustFS</span>
+        <span class="tech">edge-tts</span>
+        <span class="tech">faster-whisper</span>
+        <span class="tech">ESP32</span>
+        <span class="tech">Cloudflare</span>
+      </div>
+      <ul class="highlights">
+        <li><b>真正的端到端加密音频</b>：双层密钥架构 — RSA-2048 保护 AES-256-GCM 的 DEK，私钥永远不出浏览器；密码换了 DEK 不变，历史录音仍可解密；Recovery Code（256-bit → 13×4 字符）兜底恢复。</li>
+        <li><b>Cloudflare Tunnel 内网穿透</b>：[vm.chatboxt.top](https://vm.chatboxt.top/) 通过 Cloudflare Tunnel 映射到内网服务器，远程访问零公网暴露。</li>
+        <li><b>MQTT 命令总线 + RustFS 直传</b>：MQTT 只跑命令不传音频（`device/{uid}/cmd/say`），音频走 HTTPS + RustFS presigned URL 直连，broker 保持轻量、设备全速拉流。</li>
+        <li><b>极薄前端栈</b>：自实现 HTTP / i18n / State，单文件 `src/utils/crypto.ts`(~440 行) 承担整个 E2EE 客户端逻辑 — 无 React Query、无 Zustand、无 UI 库深度依赖。</li>
+      </ul>
+      <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap;">
+        <a class="btn btn-primary" href="https://chatboxt.top/" target="_blank">访问主站 →</a>
+        <a class="btn btn-secondary" href="https://vm.chatboxt.top/" target="_blank">Cloudflare 内网管理 →</a>
       </div>
     </div>
   </section>
@@ -938,7 +1044,6 @@
       <div class="feature-card skill-cat">
         <h3>AI / 工程化</h3>
         <div class="skill-tags">
-          <span class="skill-tag">LLM</span>
           <span class="skill-tag">Tool Calling</span>
           <span class="skill-tag">Agent Loop</span>
           <span class="skill-tag">LangChain</span>
@@ -969,6 +1074,7 @@
         <a class="btn-on-coral" href="https://github.com/duasong111" target="_blank">GitHub</a>
         <a class="btn-on-coral" href="https://gitee.com/duasong111" target="_blank">Gitee</a>
         <a class="btn-on-coral" href="https://space.bilibili.com/86426289" target="_blank">B 站</a>
+        <a class="btn-on-coral" href="https://www.xiaohongshu.com/user/profile/836033574" target="_blank">小红书</a>
       </div>
     </div>
     <div class="footer-bot">
